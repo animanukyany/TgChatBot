@@ -12,10 +12,11 @@ def send_welcome(message):
 
     btn1 = types.KeyboardButton("Play Game🎲")
     btn2 = types.KeyboardButton("Predict Future🔮")
+    btn3 = types.KeyboardButton("Send a cute cat photo🐱")
 
-    markup.add(btn1, btn2 )
+    markup.add(btn1, btn2 , btn3)
 
-    bot.reply_to(message, text = "Hello, we can chat, predict future.\nOr type /game to play.", reply_markup=markup)
+    bot.reply_to(message, text = "Hello, we can chat, predict future.\nOr type /game to play, or /send a cute cat photo.", reply_markup=markup)
 
 
 
@@ -31,7 +32,7 @@ def check_guess(message):
             if user_guess == secret_number:
                 bot.reply_to(message, "You guessed correctly!")
             else:
-                bot.reply_to(message, "Wrong , try again")
+                bot.reply_to(message, f"Wrong , it was {secret_number}")
         else:
             bot.reply_to(message, "not a num.")
 
@@ -45,9 +46,19 @@ def handle_text(message):
         reply = random.choices(answers)
         bot.reply_to(message, reply)
 
+
+    elif message.text == "Send a cute cat photo🐱":
+        bot.send_message(message.chat.id, "Looking for a cat... 🐾")
+        bot.send_photo(
+            message.chat.id,
+            photo="https://placekitten.com/400/300"
+        )
+
+
     else:
         replies = ["idk u", "I see", "try clicking a btn"]
         bot.reply_to(message, random.choice(replies))
+
 
 # @bot.message_handler(content_types=['text'])
 # def magic(message):
